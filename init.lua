@@ -34,7 +34,8 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 vim.keymap.set('n', 'q', function() end)
-vim.keymap.set('t', '<C-x>', [[<C-\><C-n>]])
+vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
+vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
 vim.filetype.add({
     extension = {
         glsl = 'glsl',
@@ -193,11 +194,11 @@ local plugins = {
             vim.cmd [[colorscheme gruvbox]]
         end,
     },
+
+    { "NTBBloodbath/sweetie.nvim" },
     {
         "nyoom-engineering/oxocarbon.nvim",
         config = function()
-            vim.o.background = "dark"
-            vim.cmd [[colorscheme oxocarbon]]
         end,
     },
 
@@ -468,7 +469,7 @@ local plugins = {
 
     },
 
-    { 'akinsho/git-conflict.nvim',  version = "*", config = true }
+    { 'akinsho/git-conflict.nvim', version = "*", config = true }
 }
 
 require('lazy').setup(plugins)
