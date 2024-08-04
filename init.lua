@@ -14,6 +14,9 @@ vim.opt.signcolumn = 'yes'
 vim.opt.clipboard = 'unnamedplus'
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
+vim.o.background = "dark"
+vim.cmd [[colorscheme retrobox]]
+
 
 
 
@@ -65,20 +68,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    {
-        "folke/noice.nvim",
-        event = "VeryLazy",
-        opts = {
-        },
-        dependencies = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-            "MunifTanjim/nui.nvim",
-            -- OPTIONAL:
-            --   `nvim-notify` is only needed, if you want to use the notification view.
-            --   If not available, we use `mini` as the fallback
-            "rcarriga/nvim-notify",
-        }
-    },
+
     {
         "folke/flash.nvim",
         event = "VeryLazy",
@@ -160,7 +150,7 @@ local plugins = {
         opts = { open_cmd = "noswapfile vnew" },
         -- stylua: ignore
         keys = {
-            { "<leader>sc", function() require("spectre").toggle() end, desc = "Replace in files (Spectre)" },
+            { "<leader>ss", function() require("spectre").toggle() end, desc = "Replace in files (Spectre)" },
         },
     },
 
@@ -190,8 +180,6 @@ local plugins = {
         "ellisonleao/gruvbox.nvim",
         priority = 1000,
         config = function()
-            vim.o.background = "dark"
-            vim.cmd [[colorscheme gruvbox]]
         end,
     },
 
@@ -201,6 +189,10 @@ local plugins = {
         config = function()
         end,
     },
+    {
+        "sainnhe/gruvbox-material"
+    },
+
 
     {
         "cshuaimin/ssr.nvim",
@@ -313,11 +305,6 @@ local plugins = {
         branch = "0.1.x",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            {
-                'nvim-telescope/telescope-fzf-native.nvim',
-                build =
-                'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
-            },
 
         },
         keys = {
@@ -342,19 +329,7 @@ local plugins = {
                         enable_preview = true
                     }
                 },
-                extensions = {
-                    fzf = {
-                        fuzzy = true,                   -- false will only do exact matching
-                        override_generic_sorter = true, -- override the generic sorter
-                        override_file_sorter = true,    -- override the file sorter
-                        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
-                        -- the default case_mode is "smart_case"
-                    }
-                }
             }
-            -- To get fzf loaded and working with telescope, you need to call
-            -- load_extension, somewhere after setup function:
-            require('telescope').load_extension('fzf')
         end
     },
     {
@@ -385,7 +360,10 @@ local plugins = {
         config = function()
             require('nvim-treesitter.configs').setup {
                 ensure_installed = { 'c', 'lua', 'rust', 'vimdoc', 'cpp', 'python', 'latex', 'glsl' },
-                highlight = { enable = true, }
+                highlight = { enable = true, },
+                sync_install = true,
+                auto_install = true
+
             }
         end
     },
