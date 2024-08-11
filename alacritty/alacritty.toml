@@ -26,4 +26,11 @@ family="BlexMono Nerd Font"
 style = "Regular"
 
 [colors]
-primary = { background = "#1A1D23" }
+primary = { background = "#151515" }
+
+[selection]
+save_to_clipboard = true
+
+[window]
+startup_mode =  "Fullscreen"
+padding = { x = 16 , y = 16 }

@@ -329,14 +329,15 @@ local plugins = {
         },
         keys = {
 
-            { "<space>ff",  "<CMD>Telescope find_files<CR>",  mode = { "n", "v" } },
-            { "<space>b",   "<CMD>Telescope buffers<CR>",     mode = { "n", "v" } },
-            { "<space>gf",  "<CMD>Telescope live_grep<CR>",   mode = { "n", "v" } },
-            { "<space>c",   "<CMD>Telescope commands<CR>",    mode = { "n", "v" } },
-            { "<space>k",   "<CMD>Telescope keymaps<CR>",     mode = { "n", "v" } },
-            { "<space>gw",  "<CMD>Telescope grep_string<CR>", mode = { "n", "v" } },
-            { "<space>t",   "<CMD>Telescope<CR>",             mode = { "n", "v" } },
-            { "<space>dia", "<CMD>Telescope diagnostics<CR>", mode = { "n", "v" } },
+            { "<space>ff",  "<CMD>Telescope find_files<CR>",           mode = { "n", "v" } },
+            { "<space>b",   "<CMD>Telescope buffers<CR>",              mode = { "n", "v" } },
+            { "<space>gf",  "<CMD>Telescope live_grep<CR>",            mode = { "n", "v" } },
+            { "<space>c",   "<CMD>Telescope commands<CR>",             mode = { "n", "v" } },
+            { "<space>k",   "<CMD>Telescope keymaps<CR>",              mode = { "n", "v" } },
+            { "<space>gw",  "<CMD>Telescope grep_string<CR>",          mode = { "n", "v" } },
+            { "<space>t",   "<CMD>Telescope<CR>",                      mode = { "n", "v" } },
+            { "<space>dia", "<CMD>Telescope diagnostics<CR>",          mode = { "n", "v" } },
+            { "<space>sm",  "<CMD>Telescope lsp_document_symbols<CR>", mode = { "n", "v" } },
         },
         config = function()
             require('telescope').setup {
@@ -437,7 +438,7 @@ local plugins = {
             },
         },
         keys = {
-            { "<leader>sm", "<cmd>SymbolsOutline<cr>" }
+            --{ "<leader>smd", "<cmd>SymbolsOutline<cr>" }
         }
 
     },
@@ -449,9 +450,9 @@ local plugins = {
 
     },
 
-    { 'akinsho/git-conflict.nvim', version = "*", config = true }
+    { 'akinsho/git-conflict.nvim', version = "*", config = true },
 }
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme no-clown-fiesta]]
+vim.cmd [[colorscheme everforest]]
