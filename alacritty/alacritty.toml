@@ -1,4 +1,8 @@
+[keyboard]
+bindings = [{ key = "F11", action = "ToggleFullscreen" }]
 
+[env]
+TERM="xterm-256color"
 
 [shell]
 program = "tmux" # <- set this to the path of your tmux installation
@@ -20,3 +24,6 @@ style = "Italic"
 [font.normal]
 family="BlexMono Nerd Font"
 style = "Regular"
+
+[colors]
+primary = { background = "#1A1D23" }

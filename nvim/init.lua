@@ -15,7 +15,6 @@ vim.opt.clipboard = 'unnamedplus'
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 vim.o.background = "dark"
-vim.cmd [[colorscheme retrobox]]
 
 
 
@@ -68,6 +67,41 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        },
+        config = function()
+            require("noice").setup({
+                lsp = {
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                    },
+                },
+                -- you can enable a preset for easier configuration
+                presets = {
+                    bottom_search = true,         -- use a classic bottom cmdline for search
+                    command_palette = true,       -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false,       -- add a border to hover docs and signature help
+                },
+            })
+        end
+    },
 
     {
         "folke/flash.nvim",
@@ -281,24 +315,10 @@ local plugins = {
         }
     },
     {
-        "mfussenegger/nvim-dap",
-        dependencies = {
-            "theHamsta/nvim-dap-virtual-text",
-            "mfussenegger/nvim-dap-python",
-            "rcarriga/nvim-dap-ui"
-        },
-        config = function()
-            require('dap-conf')
-        end,
-        keys = {
-            { "<F5>",      function() require('dap').continue() end,          mode = { "n" } },
-            { "<F10>",     function() require('dap').step_over() end,         mode = { "n" } },
-            { "<F11>",     function() require('dap').step_into() end,         mode = { "n" } },
-            { "<F12>",     function() require('dap').step_out() end,          mode = { "n" } },
-            { "<space>db", function() require('dap').toggle_breakpoint() end, mode = { "n" } },
-            { "<space>dl", function() require('dap').run_last() end,          mode = { "n" } },
-            { "<space>dh", function() require('dap.ui.widgets').hover() end,  mode = { "n" } }
-        }
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
     },
     {
         "nvim-telescope/telescope.nvim",
@@ -433,3 +453,5 @@ local plugins = {
 }
 
 require('lazy').setup(plugins)
+
+vim.cmd [[colorscheme no-clown-fiesta]]
