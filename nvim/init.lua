@@ -276,7 +276,6 @@ local plugins = {
         -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
         -- In Vim, compat mode is turned on as Lush only works in Neovim.
         keys = {
-            { "<space>ll", ':set background=light<CR>:colorscheme zenbones<CR>' }
         }
     },
     {
