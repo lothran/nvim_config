@@ -7,26 +7,31 @@ TERM="xterm-256color"
 [shell]
 program = "tmux" # <- set this to the path of your tmux installation
 
-[font]
-size = 12.0
-[font.bold]
-family="BlexMono Nerd Font"
-style = "Bold"
+# [font]
+# size = 12.0
+# [font.bold]
+# family="BlexMono Nerd Font"
+# style = "Bold"
+#
+# [font.bold_italic]
+# family="BlexMono Nerd Font"
+# style = "Bold Italic"
+#
+# [font.italic]
+# family="BlexMono Nerd Font"
+# style = "Italic"
+#
+# [font.normal]
+# family="BlexMono Nerd Font"
+# style = "Regular"
 
-[font.bold_italic]
-family="BlexMono Nerd Font"
-style = "Bold Italic"
-
-[font.italic]
-family="BlexMono Nerd Font"
-style = "Italic"
 
 [font.normal]
-family="BlexMono Nerd Font"
+family="0xProto Nerd Font Mono"
 style = "Regular"
 
 [colors]
-primary = { background = "#2d353b" }
+
 
 [selection]
 save_to_clipboard = true

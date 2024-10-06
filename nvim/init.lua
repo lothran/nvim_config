@@ -15,6 +15,7 @@ vim.opt.clipboard = 'unnamedplus'
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 vim.o.background = "dark"
+vim.opt.termguicolors = true
 
 
 
@@ -79,6 +80,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+    {
+        'aliqyan-21/darkvoid.nvim',
+    },
 
     {
         "folke/flash.nvim",
@@ -176,6 +180,15 @@ local plugins = {
             { "<space>zen", "<CMD>ZenMode<CR>", mode = { "n", "v" } },
 
         }
+    },
+
+    {
+        'norcalli/nvim-colorizer.lua',
+        opts = {},
+        config = function()
+            require 'colorizer'.setup()
+        end
+
     },
 
     {
@@ -422,6 +435,10 @@ local plugins = {
         'nvim-lualine/lualine.nvim',
         config = function()
             require('lualine-conf')
+            require("darkvoid").setup({
+                transparent = true, -- set true for transparent
+                glow = true
+            })
         end
 
     },
@@ -431,4 +448,4 @@ local plugins = {
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme everforest]]
+vim.cmd [[colorscheme gruvbox]]

@@ -5,7 +5,7 @@ lsp_servers = {
     'clangd',
     'rust_analyzer',
     'pyright',
-    'tsserver',
+    'ts_ls',
     'julials',
     'ltex',
     'neocmake',
