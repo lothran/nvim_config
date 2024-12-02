@@ -1,6 +1,3 @@
-require("mason").setup()
-
-
 lsp_servers = {
     'clangd',
     'rust_analyzer',
@@ -36,12 +33,17 @@ lsp_opts = {
 }
 
 
+local jit = require("jit")
+
+require("mason").setup()
+if (jit.arch == "x86" or jit.arch == "x64") then
+    require("mason-lspconfig").setup({
+        ensure_installed = lsp_servers,
+
+    })
+end
 
 
-require("mason-lspconfig").setup({
-    ensure_installed = lsp_servers,
-
-})
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = vim.tbl_deep_extend("force",
