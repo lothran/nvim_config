@@ -448,4 +448,4 @@ local plugins = {
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme gruvbox]]
+vim.cmd [[colorscheme darkvoid]]
