@@ -1,5 +1,6 @@
 local helpers = require 'incline.helpers'
 local devicons = require 'nvim-web-devicons'
+print(vim.api.nvim_get_hl(0, {}).sp)
 require('incline').setup {
     window = {
         padding = 0,
@@ -17,7 +18,6 @@ require('incline').setup {
             ' ',
             { filename, gui = modified and 'bold,italic' or 'bold' },
             ' ',
-            guibg = '#44406e',
         }
     end,
 }
