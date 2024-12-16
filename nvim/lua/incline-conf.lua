@@ -1,6 +1,5 @@
 local helpers = require 'incline.helpers'
 local devicons = require 'nvim-web-devicons'
-print(vim.api.nvim_get_hl(0, {}).sp)
 require('incline').setup {
     window = {
         padding = 0,
