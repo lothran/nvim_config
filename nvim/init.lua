@@ -452,8 +452,14 @@ local plugins = {
   },
 
   { 'akinsho/git-conflict.nvim', version = "*", config = true },
+  {
+    "sho-87/kanagawa-paper.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  }
 }
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme gruvbox]]
+vim.cmd [[colorscheme kanagawa-paper]]
