@@ -17,6 +17,7 @@ vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos
 vim.o.background      = "dark"
 vim.opt.termguicolors = true
 vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
+vim.opt.signcolumn = 'auto:1-2'
 
 
 
@@ -183,13 +184,10 @@ local plugins = {
   },
   {
     "lewis6991/gitsigns.nvim",
-    opts = {},
     lazy = false,
-
-    keys = {
-      { "<leader>gb", function() require("gitsigns").toggle_current_line_blame() end, desc = "" },
-    },
-
+    config = function()
+      require("gitsigns_conf")
+    end,
   },
 
   {
