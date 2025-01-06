@@ -17,7 +17,7 @@ vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos
 vim.o.background      = "dark"
 vim.opt.termguicolors = true
 vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
-vim.opt.signcolumn = 'auto:1-2'
+vim.opt.signcolumn    = 'auto:1-2'
 
 
 
@@ -460,4 +460,4 @@ local plugins = {
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme kanagawa-paper]]
+vim.cmd [[colorscheme gruvbox]]
