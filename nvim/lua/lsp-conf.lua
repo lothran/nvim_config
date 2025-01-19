@@ -1,4 +1,5 @@
 local lsp_servers = {
+  'protols',
   'clangd',
   'rust_analyzer',
   'pyright',
@@ -66,10 +67,18 @@ local lspconfig = require('lspconfig')
 
 for _, lsp in ipairs(lsp_servers) do
   if (lsp_opts[lsp] == nil) then
-    lspconfig[lsp].setup {
-      capabilities = capabilities,
-      on_attach = require("lsp-format").on_attach
-    }
+    if (lsp == 'clangd') then
+      lspconfig[lsp].setup {
+        capabilities = capabilities,
+        filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+        on_attach = require("lsp-format").on_attach
+      }
+    else
+      lspconfig[lsp].setup {
+        capabilities = capabilities,
+        on_attach = require("lsp-format").on_attach
+      }
+    end
   else
     lspconfig[lsp].setup {
       capabilities = capabilities,
