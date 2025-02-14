@@ -152,7 +152,7 @@ local plugins = {
   {
     "b0o/incline.nvim",
     dependencies = {
-
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     },
     opts = {},
     config = function()
@@ -399,21 +399,7 @@ local plugins = {
       }
     end
   },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    },
-    keys = {
-      { "<leader>fs", "<cmd>Neotree toggle<cr>",          desc = "NeoTree" },
-      { "<leader>gg", '<cmd>Neotree float git_status<cr>' }
-    },
-    opts = {
-    }
-  },
+
   {
     'simrat39/symbols-outline.nvim',
     opts = {
@@ -482,26 +468,44 @@ local plugins = {
     opts = {},
   },
   {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {
+      hint_prefix = "⇥ "
+
+    },
+    config = function(_, opts) require 'lsp_signature'.setup(opts) end
+  },
+  {
     "rachartier/tiny-glimmer.nvim",
     opts = {
       overwrite = {
         search = {
           enabled = true,
+          default_animation = {
+            name = "rainbow",
+            settings = {
+              to_color = vim.opt.hlsearch and "CurSearch" or "Search",
+            },
+          },
         },
+        paste = {
+          enabled = true,
+          default_animation = "rainbow",
+        },
+
         undo = {
           enabled = true,
-
+          default_animation = "rainbow",
         },
         redo = {
           enabled = true,
+          default_animation = "rainbow",
 
         }
-
-      }
-
-    }
-
-
+      },
+      default_animation = "rainbow",
+    },
   }
 }
 
