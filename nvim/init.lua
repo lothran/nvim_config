@@ -224,6 +224,22 @@ local plugins = {
   {
     "sainnhe/gruvbox-material"
   },
+  {
+    'AlexvZyl/nordic.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('nordic').setup(
+        {
+          --   after_palette = function(palette)
+          --     local U = require("nordic.utils")
+          --     palette.bg_visual = U.blend(palette.orange.base, palette.bg, 0.8)
+          --   end
+        }
+
+      )
+    end
+  },
 
 
   {
@@ -464,9 +480,31 @@ local plugins = {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
+  },
+  {
+    "rachartier/tiny-glimmer.nvim",
+    opts = {
+      overwrite = {
+        search = {
+          enabled = true,
+        },
+        undo = {
+          enabled = true,
+
+        },
+        redo = {
+          enabled = true,
+
+        }
+
+      }
+
+    }
+
+
   }
 }
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme gruvbox]]
+vim.cmd [[colorscheme nordic]]
