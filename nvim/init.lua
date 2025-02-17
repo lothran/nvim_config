@@ -347,7 +347,6 @@ local plugins = {
       { "<space>fh",  "<CMD>Telescope find_files hidden=true no_ignore=true<CR>", mode = { "n", "v" } },
       { "<space>b",   "<CMD>Telescope buffers<CR>",                               mode = { "n", "v" } },
       { "<space>gf",  "<CMD>Telescope live_grep<CR>",                             mode = { "n", "v" } },
-      { "<space>c",   "<CMD>Telescope commands<CR>",                              mode = { "n", "v" } },
       { "<space>k",   "<CMD>Telescope keymaps<CR>",                               mode = { "n", "v" } },
       { "<space>gw",  "<CMD>Telescope grep_string<CR>",                           mode = { "n", "v" } },
       { "<space>tt",  "<CMD>Telescope<CR>",                                       mode = { "n", "v" } },
@@ -386,6 +385,20 @@ local plugins = {
       },
     }
   },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    keys = {
+      { "<space>fs", "<CMD>Neotree<CR>", mode = { "n", "v" } }
+    }
+  },
+
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -459,6 +472,19 @@ local plugins = {
     opts = {},
   },
   {
+    "ramojus/mellifluous.nvim",
+    opts = {}
+
+  },
+  {
+    "ashen-org/ashen.nvim",
+    -- optional but recommended,
+    -- pin to the latest stable release:
+    opts = {
+      -- your settings here
+    }
+  },
+  {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
@@ -505,10 +531,17 @@ local plugins = {
         }
       },
       default_animation = "rainbow",
+      animations = {
+        rainbow = {
+          max_duration = 200,
+          min_duration = 100,
+          chars_for_max_duration = 20,
+        },
+      }
     },
   }
 }
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme nordic]]
+vim.cmd [[colorscheme  github_dark]]
