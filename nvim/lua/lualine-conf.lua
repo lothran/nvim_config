@@ -68,6 +68,7 @@ ins_left {
 }
 
 
+
 ins_left {
   function()
     return '▊'
@@ -111,7 +112,6 @@ ins_left {
     return '%='
   end,
 }
-
 ins_left {
   -- Lsp server name .
   function()
@@ -157,10 +157,4 @@ ins_right {
   cond = conditions.hide_in_width,
 }
 
-ins_right {
-  function()
-    return '▊'
-  end,
-  padding = { left = 1 },
-}
 lualine.setup(config)

@@ -4,6 +4,7 @@ local lsp_servers = {
   'rust_analyzer',
   'pyright',
   'ts_ls',
+  'glslls',
   'julials',
   'ltex',
   'neocmake',
@@ -47,16 +48,21 @@ end
 
 
 -- Add additional capabilities supported by nvim-cmp
+
+
+
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = vim.tbl_deep_extend("force",
+capabilities = vim.tbl_deep_extend("keep",
   capabilities,
   require('cmp_nvim_lsp').default_capabilities()
 )
 
 capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
-
-
+local function on_attach(client, bufnr)
+  require("lsp-format").on_attach(client, bufnr)
+end
 
 
 
@@ -71,28 +77,20 @@ for _, lsp in ipairs(lsp_servers) do
       lspconfig[lsp].setup {
         capabilities = capabilities,
         filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
-        on_attach = require("lsp-format").on_attach
-      }
+        on_attach = on_attach }
     else
       lspconfig[lsp].setup {
         capabilities = capabilities,
-        on_attach = require("lsp-format").on_attach
-      }
+        on_attach = on_attach }
     end
   else
     lspconfig[lsp].setup {
       capabilities = capabilities,
       settings = lsp_opts[lsp],
-      on_attach = require("lsp-format").on_attach
+      on_attach = on_attach
     }
   end
 end
-
-lspconfig["glslls"].setup {
-  cmd = { "/home/carad/projects/glsl-language-server/build/glslls", "--stdin" },
-  capabilities = capabilities,
-  on_attach = require("lsp-format").on_attach
-}
 
 
 
@@ -101,6 +99,7 @@ lspconfig["glslls"].setup {
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
+
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     -- Buffer local mappings.

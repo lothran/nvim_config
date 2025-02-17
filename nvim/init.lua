@@ -48,6 +48,18 @@ vim.filetype.add({
     comp = 'glsl',
   }
 })
+local function show_symboles()
+  local telescope = require('telescope.builtin')
+  telescope.lsp_workspace_symbols({
+    shorten_path = true,
+    symbols = {
+      "function", "object", "interface",
+      "class",
+      "constructor",
+      "method",
+    }
+  });
+end
 
 
 
@@ -351,7 +363,7 @@ local plugins = {
       { "<space>gw",  "<CMD>Telescope grep_string<CR>",                           mode = { "n", "v" } },
       { "<space>tt",  "<CMD>Telescope<CR>",                                       mode = { "n", "v" } },
       { "<space>dia", "<CMD>Telescope diagnostics<CR>",                           mode = { "n", "v" } },
-      { "<space>sm",  "<CMD>Telescope lsp_document_symbols<CR>",                  mode = { "n", "v" } },
+      { "<space>ls",  function() show_symboles() end,                             mode = { "n", "v" } },
       { "<space>gs",  "<CMD>Telescope git_status<CR>",                            mode = { "n", "v" } },
     },
     config = function()
@@ -368,23 +380,23 @@ local plugins = {
       }
     end
   },
-  {
-    "sindrets/diffview.nvim",
-    keys = {
-      { "<space>gd", "<CMD>DiffviewOpen<CR>" },
-    },
-    config = {
-      keymaps = {
-        view = {
-          ["<space>gd"] = "<CMD>DiffviewClose<CR>",
-        },
-        file_panel = {
-          ["<space>gd"] = "<CMD>DiffviewClose<CR>",
-          ["c"] = "<CMD>DiffviewClose",
-        },
-      },
-    }
-  },
+  -- {
+  --   "sindrets/diffview.nvim",
+  --   keys = {
+  --     { "<space>gd", "<CMD>DiffviewOpen<CR>" },
+  --   },
+  --   config = {
+  --     keymaps = {
+  --       view = {
+  --         ["<space>gd"] = "<CMD>DiffviewClose<CR>",
+  --       },
+  --       file_panel = {
+  --         ["<space>gd"] = "<CMD>DiffviewClose<CR>",
+  --         ["c"] = "<CMD>DiffviewClose",
+  --       },
+  --     },
+  --   }
+  -- },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -408,7 +420,6 @@ local plugins = {
         highlight = { enable = true, },
         sync_install = true,
         auto_install = true
-
       }
     end
   },
@@ -453,13 +464,15 @@ local plugins = {
 
   },
   {
+    "j-hui/fidget.nvim",
+    opts = {
+      -- options
+    },
+  },
+  {
     'nvim-lualine/lualine.nvim',
     config = function()
       require('lualine-conf')
-      require("darkvoid").setup({
-        transparent = true, -- set true for transparent
-        glow = true
-      })
     end
 
   },
@@ -539,9 +552,44 @@ local plugins = {
         },
       }
     },
+  },
+  {
+    "bassamsdata/namu.nvim",
+    config = function()
+      require("namu").setup({
+        -- Enable the modules you want
+        namu_symbols = {
+          enable = true,
+          options = {
+            multiselect = {
+              enabled = false
+            }
+
+          }, -- here you can configure namu
+        },
+        -- Optional: Enable other modules if needed
+        colorscheme = {
+          enable = false,
+          options = {
+            -- NOTE: if you activate persist, then please remove any vim.cmd("colorscheme ...") in your config, no needed anymore
+            persist = true,      -- very efficient mechanism to Remember selected colorscheme
+            write_shada = false, -- If you open multiple nvim instances, then probably you need to enable this
+          },
+        },
+      })
+      -- === Suggested Keymaps: ===
+      vim.keymap.set("n", "<leader>sm", ":Namu symbols<cr>", {
+        desc = "Jump to LSP symbol",
+        silent = true,
+      })
+      vim.keymap.set("n", "<leader>th", ":Namu colorscheme<cr>", {
+        desc = "Colorscheme Picker",
+        silent = true,
+      })
+    end,
   }
 }
 
 require('lazy').setup(plugins)
 
-vim.cmd [[colorscheme  github_dark]]
+vim.cmd [[colorscheme  gruvbox]]
