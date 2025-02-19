@@ -563,6 +563,10 @@ local plugins = {
           options = {
             multiselect = {
               enabled = false
+
+            },
+            movement = { -- Support multiple keys
+              next = { "<C-n>", "<DOWN>","<TAB>" },
             }
 
           }, -- here you can configure namu
