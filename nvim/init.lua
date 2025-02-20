@@ -364,6 +364,7 @@ local plugins = {
       { "<space>tt",  "<CMD>Telescope<CR>",                                       mode = { "n", "v" } },
       { "<space>dia", "<CMD>Telescope diagnostics<CR>",                           mode = { "n", "v" } },
       { "<space>ls",  function() show_symboles() end,                             mode = { "n", "v" } },
+      { "<space>ml",  function() require('mutagen').telescope_list_syncs() end,   mode = { "n", "v" } },
       { "<space>gs",  "<CMD>Telescope git_status<CR>",                            mode = { "n", "v" } },
     },
     config = function()
@@ -563,10 +564,9 @@ local plugins = {
           options = {
             multiselect = {
               enabled = false
-
             },
             movement = { -- Support multiple keys
-              next = { "<C-n>", "<DOWN>","<TAB>" },
+              next = { "<C-n>", "<DOWN>", "<TAB>" },
             }
 
           }, -- here you can configure namu
@@ -595,5 +595,6 @@ local plugins = {
 }
 
 require('lazy').setup(plugins)
+require("mutagen").setup({})
 
 vim.cmd [[colorscheme  gruvbox]]
