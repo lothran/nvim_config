@@ -175,10 +175,11 @@ local plugins = {
     "nvim-pack/nvim-spectre",
     build = false,
     cmd = "Spectre",
-    opts = { open_cmd = "noswapfile vnew" },
-    -- stylua: ignore
     keys = {
-      { "<leader>ss", function() require("spectre").toggle() end, desc = "Replace in files (Spectre)" },
+      { "<leader>S",  function() require("spectre").toggle() end,                            desc = "Replace in files (Spectre)", mode = "n" },
+      { "<leader>sw", function() require("spectre").open_visual({ select_word = true }) end, desc = "Replace in files (Spectre)", mode = "n" },
+      { "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>',                  desc = "Replace in files (Spectre)", mode = "v" },
+      { "<leader>sp", function() require("spectre").open_file_search() end,                  desc = "Replace in files (Spectre)", mode = "n" },
     },
   },
 
