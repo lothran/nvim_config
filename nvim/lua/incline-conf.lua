@@ -1,5 +1,6 @@
 local helpers = require 'incline.helpers'
 local devicons = require 'nvim-web-devicons'
+
 require('incline').setup {
     window = {
         padding = 0,
@@ -11,6 +12,7 @@ require('incline').setup {
             filename = '[No Name]'
         end
         local ft_icon, ft_color = devicons.get_icon_color(filename)
+        
         local modified = vim.bo[props.buf].modified
         return {
             ft_icon and { ' ', ft_icon, ' ', guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or '',

@@ -18,6 +18,7 @@ vim.o.background      = "dark"
 vim.opt.termguicolors = true
 vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
 vim.opt.signcolumn    = 'auto:1-2'
+vim.opt.scroll        = 50
 
 
 
@@ -37,6 +38,9 @@ vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+vim.keymap.set({ 'n', 'i', 'v' }, '<C-n>', '<C-d>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<C-p>', '<C-u>')
 
 vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
 vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
@@ -196,14 +200,6 @@ local plugins = {
     }
   },
   {
-    "lewis6991/gitsigns.nvim",
-    lazy = false,
-    config = function()
-      require("gitsigns_conf")
-    end,
-  },
-
-  {
     'norcalli/nvim-colorizer.lua',
     opts = {},
     config = function()
@@ -297,6 +293,37 @@ local plugins = {
     opts = {}
   },
   {
+    'saghen/blink.cmp',
+    -- optional: provides snippets for the snippet source
+    dependencies = 'rafamadriz/friendly-snippets',
+    build = 'cargo build --release',
+    version = 'v0.13.1',
+    opts = {
+      keymap = { preset = 'default' },
+
+
+      appearance = {
+        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+        -- Useful for when your theme doesn't support blink.cmp
+        -- Will be removed in a future release
+        use_nvim_cmp_as_default = true,
+        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = 'mono'
+      },
+      signature = { enabled = true },
+
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+    },
+    opts_extend = { "sources.default" }
+
+  },
+  {
     'neovim/nvim-lspconfig',
     dependencies = {
       "zbirenbaum/copilot.lua",
@@ -311,6 +338,7 @@ local plugins = {
       'L3MON4D3/LuaSnip',
       'hrsh7th/cmp-path',
       "kdheepak/cmp-latex-symbols",
+      'saghen/blink.cmp',
       'rafamadriz/friendly-snippets',
       "b0o/schemastore.nvim",
       { 'lukas-reineke/lsp-format.nvim', config = true },
@@ -508,15 +536,15 @@ local plugins = {
     ---@type render.md.UserConfig
     opts = {},
   },
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
-    opts = {
-      hint_prefix = "⇥ "
-
-    },
-    config = function(_, opts) require 'lsp_signature'.setup(opts) end
-  },
+  -- {
+  --   "ray-x/lsp_signature.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     hint_prefix = "⇥ "
+  --
+  --   },
+  --   config = function(_, opts) require 'lsp_signature'.setup(opts) end
+  -- },
   {
     "rachartier/tiny-glimmer.nvim",
     opts = {

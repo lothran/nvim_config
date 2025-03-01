@@ -112,6 +112,7 @@ ins_left {
     return '%='
   end,
 }
+
 ins_left {
   -- Lsp server name .
   function()
