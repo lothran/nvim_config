@@ -562,7 +562,10 @@ local plugins = {
           enabled = true,
           default_animation = "rainbow",
         },
-
+        yank = {
+          enabled = true,
+          default_animation = "rainbow",
+        },
         undo = {
           enabled = true,
           default_animation = "rainbow",
