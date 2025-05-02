@@ -393,7 +393,6 @@ local plugins = {
       { "<space>tt",  "<CMD>Telescope<CR>",                                       mode = { "n", "v" } },
       { "<space>dia", "<CMD>Telescope diagnostics<CR>",                           mode = { "n", "v" } },
       { "<space>ls",  function() show_symboles() end,                             mode = { "n", "v" } },
-      { "<space>ml",  function() require('mutagen').telescope_list_syncs() end,   mode = { "n", "v" } },
       { "<space>gs",  "<CMD>Telescope git_status<CR>",                            mode = { "n", "v" } },
     },
     config = function()
@@ -536,6 +535,12 @@ local plugins = {
     ---@type render.md.UserConfig
     opts = {},
   },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+  },
   -- {
   --   "ray-x/lsp_signature.nvim",
   --   event = "VeryLazy",
@@ -547,6 +552,8 @@ local plugins = {
   -- },
   {
     "rachartier/tiny-glimmer.nvim",
+    event = "VeryLazy",
+    priority = 10, -- Needs to be a really low priority, to catch others plugins keybindings
     opts = {
       overwrite = {
         search = {
@@ -623,10 +630,20 @@ local plugins = {
         silent = true,
       })
     end,
+  },
+  {
+    "folke/snacks.nvim",
+    ---@type snacks.Config
+    opts = {
+      bigfile = {
+        -- your bigfile configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    }
   }
 }
 
 require('lazy').setup(plugins)
-require("mutagen").setup({})
 
 vim.cmd [[colorscheme  gruvbox]]
