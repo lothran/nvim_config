@@ -19,6 +19,7 @@ vim.opt.termguicolors = true
 vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
 vim.opt.signcolumn    = 'auto:1-2'
 vim.opt.scroll        = 50
+vim.diagnostic.config({ virtual_text = true })
 
 
 
@@ -27,6 +28,7 @@ vim.opt.scroll        = 50
 -- Keymap
 -------------------------------------------------------------------------------
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
+vim.g.maplocalleader = ' '
 
 
 vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-h>", "<C-w>h")
@@ -176,14 +178,25 @@ local plugins = {
     end,
   },
   {
-    "nvim-pack/nvim-spectre",
-    build = false,
-    cmd = "Spectre",
+    'MagicDuck/grug-far.nvim',
     keys = {
-      { "<leader>S",  function() require("spectre").toggle() end,                            desc = "Replace in files (Spectre)", mode = "n" },
-      { "<leader>sw", function() require("spectre").open_visual({ select_word = true }) end, desc = "Replace in files (Spectre)", mode = "n" },
-      { "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>',                  desc = "Replace in files (Spectre)", mode = "v" },
-      { "<leader>sp", function() require("spectre").open_file_search() end,                  desc = "Replace in files (Spectre)", mode = "n" },
+      {
+        "<leader>si",
+        function()
+          local search = vim.fn.getreg('/')
+          -- surround with \b if "word" search (such as when pressing `*`)
+          if search and vim.startswith(search, '\\<') and vim.endswith(search, '\\>') then
+            search = '\\b' .. search:sub(3, -3) .. '\\b'
+          end
+          require('grug-far').open({
+            prefills = {
+              search = search,
+            },
+          })
+        end,
+        desc = "Replace in files (Spectre)",
+        mode = { "n", "x" }
+      },
     },
   },
 
@@ -551,11 +564,28 @@ local plugins = {
   --   config = function(_, opts) require 'lsp_signature'.setup(opts) end
   -- },
   {
+    "gbprod/substitute.nvim",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    keys = {
+      { "<space>s",  function() require('substitute.range').operator() end, mode = { "n" } },
+      { "<space>s",  function() require('substitute.range').visual() end,   mode = { "x" } },
+      { "<space>ss", function() require('substitute.range').word() end,     mode = { "n" } },
+    }
+  },
+  {
     "rachartier/tiny-glimmer.nvim",
     event = "VeryLazy",
     priority = 10, -- Needs to be a really low priority, to catch others plugins keybindings
     opts = {
       overwrite = {
+        yank = {
+          enabled = true,
+          default_animation = "rainbow",
+        },
         search = {
           enabled = true,
           default_animation = {
@@ -582,6 +612,22 @@ local plugins = {
           default_animation = "rainbow",
 
         }
+      },
+      support = {
+        -- Enable support for gbprod/substitute.nvim
+        -- You can use it like so:
+        -- require("substitute").setup({
+        --     on_substitute = require("tiny-glimmer.support.substitute").substitute_cb,
+        --     highlight_substituted_text = {
+        --         enabled = false,
+        --     },
+        --})
+        substitute = {
+          enabled = true,
+
+          -- Can also be a table. Refer to overwrite.search for more information
+          default_animation = "rainbow",
+        },
       },
       default_animation = "rainbow",
       animations = {
