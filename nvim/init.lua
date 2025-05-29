@@ -181,7 +181,18 @@ local plugins = {
     'MagicDuck/grug-far.nvim',
     keys = {
       {
-        "<leader>si",
+        "<leader>ss",
+        function()
+          require('grug-far').open({
+            prefills = {
+              search = vim.fn.expand("<cword>")
+            }
+          })
+        end,
+        mode = { "n" }
+      },
+      {
+        "<leader>ss",
         function()
           local search = vim.fn.getreg('/')
           -- surround with \b if "word" search (such as when pressing `*`)
@@ -194,8 +205,37 @@ local plugins = {
             },
           })
         end,
-        desc = "Replace in files (Spectre)",
-        mode = { "n", "x" }
+        mode = { "v" }
+      },
+      {
+        "<leader>sf",
+        function()
+          require('grug-far').open({
+            prefills = {
+              paths = vim.fn.expand("%"),
+              search = vim.fn.expand("<cword>")
+            }
+          })
+        end,
+        mode = { "n" }
+
+      },
+      {
+        "<leader>sf",
+        function()
+          local search = vim.fn.getreg('/')
+          -- surround with \b if "word" search (such as when pressing `*`)
+          if search and vim.startswith(search, '\\<') and vim.endswith(search, '\\>') then
+            search = '\\b' .. search:sub(3, -3) .. '\\b'
+          end
+          require('grug-far').open({
+            prefills = {
+              paths = vim.fn.expand("%"),
+              search = search,
+            },
+          })
+        end,
+        mode = { "v" }
       },
     },
   },
@@ -563,19 +603,6 @@ local plugins = {
   --   },
   --   config = function(_, opts) require 'lsp_signature'.setup(opts) end
   -- },
-  {
-    "gbprod/substitute.nvim",
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-    keys = {
-      { "<space>s",  function() require('substitute.range').operator() end, mode = { "n" } },
-      { "<space>s",  function() require('substitute.range').visual() end,   mode = { "x" } },
-      { "<space>ss", function() require('substitute.range').word() end,     mode = { "n" } },
-    }
-  },
   {
     "rachartier/tiny-glimmer.nvim",
     event = "VeryLazy",
