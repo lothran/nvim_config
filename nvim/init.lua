@@ -19,7 +19,7 @@ vim.opt.termguicolors = true
 vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
 vim.opt.signcolumn    = 'auto:1-2'
 vim.opt.scroll        = 50
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({ virtual_lines = true })
 
 
 
