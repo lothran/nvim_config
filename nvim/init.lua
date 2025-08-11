@@ -484,7 +484,7 @@ local plugins = {
         pickers = {
           find_files = {
             hidden = "true",
-            file_ignore_patterns = { 'node_modules', '.git', '.venv', '.nvim' },
+            file_ignore_patterns = { 'node_modules', '.git', '.venv', '.nvim', '.repo' },
           },
           colorscheme = {
             enable_preview = true
