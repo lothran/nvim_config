@@ -19,7 +19,6 @@ vim.opt.termguicolors = true
 vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
 vim.opt.signcolumn    = 'auto:1-2'
 vim.opt.scroll        = 50
-vim.diagnostic.config({ virtual_lines = true })
 
 
 
@@ -99,6 +98,33 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      printf_statements = {
+        -- add a custom printf statement for cpp
+        cpp = {
+          'std::cout << "%s" << std::endl;'
+        },
+        c = {
+          'pr_err("%s \\n");'
+        }
+      }
+
+    },
+    keys = {
+      {
+        "<leader>rp",
+        function() require('refactoring').debug.printf({ below = false }) end,
+        mode = "n"
+      }
+
+    },
+  },
   {
     'aliqyan-21/darkvoid.nvim',
   },
@@ -375,7 +401,7 @@ local plugins = {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lsp', 'path', 'buffer' },
       },
       fuzzy = { implementation = "prefer_rust_with_warning" },
     },
@@ -385,20 +411,9 @@ local plugins = {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      "zbirenbaum/copilot.lua",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      'hrsh7th/nvim-cmp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
-      'saadparwaiz1/cmp_luasnip',
-      'L3MON4D3/LuaSnip',
-      'hrsh7th/cmp-path',
-      "kdheepak/cmp-latex-symbols",
       'saghen/blink.cmp',
-      'rafamadriz/friendly-snippets',
       "b0o/schemastore.nvim",
       { 'lukas-reineke/lsp-format.nvim', config = true },
     },
@@ -439,6 +454,7 @@ local plugins = {
     branch = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
 
     },
     keys = {
@@ -456,16 +472,27 @@ local plugins = {
     },
     config = function()
       require('telescope').setup {
+        extensions = {
+          fzf = {
+            fuzzy = true,                   -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true,    -- override the file sorter
+            case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+            -- the default case_mode is "smart_case"
+          }
+        },
         pickers = {
           find_files = {
-            hidden = true,
-
+            hidden = "true",
+            file_ignore_patterns = { 'node_modules', '.git', '.venv', '.nvim' },
           },
           colorscheme = {
             enable_preview = true
           }
         },
       }
+
+      require('telescope').load_extension('fzf')
     end
   },
   -- {
