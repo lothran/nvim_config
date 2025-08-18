@@ -45,6 +45,15 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-n>', '<C-d>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-p>', '<C-u>')
+vim.keymap.set({ 'n' }, "<space>dy", function()
+  vim.o.background = "light"
+  vim.cmd [[colorscheme github_light]]
+end)
+
+vim.keymap.set({ 'n' }, "<space>ng", function()
+  vim.o.background = "light"
+  vim.cmd [[colorscheme github_dark_default]]
+end)
 
 vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
 vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
@@ -456,7 +465,7 @@ local plugins = {
     branch = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
 
     },
     keys = {
