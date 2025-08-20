@@ -531,7 +531,7 @@ local plugins = {
     build = ':TSUpdate',
     config = function()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'c', 'lua', 'rust', 'vimdoc', 'cpp', 'python', 'latex', 'glsl' },
+        ensure_installed = { 'c', 'lua', 'rust', 'vimdoc', 'cpp', 'python', 'bash', 'bitbake', 'glsl' },
         highlight = { enable = true, },
         sync_install = true,
         auto_install = true
