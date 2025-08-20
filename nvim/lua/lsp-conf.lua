@@ -41,7 +41,7 @@ local jit = require("jit")
 require("mason").setup()
 if (jit.arch == "x86" or jit.arch == "x64") then
   require("mason-lspconfig").setup({
-    ensure_installed = lsp_servers,
+    ensure_installed = {"clangd"},
 
   })
 end
