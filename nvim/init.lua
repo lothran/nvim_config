@@ -1,17 +1,30 @@
 -------------------------------------------------------------------------------
 -- Options
 -------------------------------------------------------------------------------
-vim.opt.number        = true
-vim.opt.cursorline    = true
-vim.opt.smartindent   = true
-vim.opt.expandtab     = true
-vim.opt.tabstop       = 2
-vim.opt.shiftwidth    = 2
-vim.opt.laststatus    = 3
-vim.opt.cmdheight     = 0
-vim.opt.numberwidth   = 4
-vim.opt.signcolumn    = 'yes'
-vim.opt.clipboard     = 'unnamedplus'
+vim.opt.number      = true
+vim.opt.cursorline  = true
+vim.opt.smartindent = true
+vim.opt.expandtab   = true
+vim.opt.tabstop     = 2
+vim.opt.shiftwidth  = 2
+vim.opt.laststatus  = 3
+vim.opt.cmdheight   = 0
+vim.opt.numberwidth = 4
+vim.opt.signcolumn  = 'yes'
+vim.opt.clipboard   = 'unnamedplus'
+vim.g.clipboard     = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
+
+
 vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 vim.o.background      = "dark"
