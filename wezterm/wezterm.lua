@@ -33,6 +33,15 @@ config.keys = {
   { key = "LeftArrow",  mods = 'CTRL|SHIFT', action = wezterm.action { ActivateTabRelative = -1 } },
   { key = "RightArrow", mods = 'CTRL|SHIFT', action = wezterm.action { ActivateTabRelative = 1 } },
 }
+config.mouse_bindings = {
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = wezterm.action { CompleteSelectionOrOpenLinkAtMouseCursor = "Clipboard" },
+    -- NOTE: the default action is:
+    -- action=wezterm.action{CompleteSelectionOrOpenLinkAtMouseCursor="PrimarySelection"},
+  },
+}
 -- making window titles more distinct
 wezterm.on('format-window-title', function()
   local title = '[' .. wezterm.mux.get_active_workspace() .. ']'

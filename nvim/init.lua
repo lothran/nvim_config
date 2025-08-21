@@ -12,6 +12,8 @@ vim.opt.cmdheight   = 0
 vim.opt.numberwidth = 4
 vim.opt.signcolumn  = 'yes'
 vim.opt.clipboard   = 'unnamedplus'
+vim.opt.mouse = ""
+
 
 
 vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
@@ -752,4 +754,3 @@ local plugins = {
 
 require('lazy').setup(plugins)
 vim.cmd [[colorscheme  gruvbox]]
-require('handle_remote')
