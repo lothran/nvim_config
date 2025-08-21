@@ -19,7 +19,6 @@ vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos
 vim.o.background      = "dark"
 vim.opt.termguicolors = true
 vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
-vim.opt.signcolumn    = 'auto:1-2'
 vim.opt.scroll        = 50
 
 
@@ -637,69 +636,69 @@ local plugins = {
   --   },
   --   config = function(_, opts) require 'lsp_signature'.setup(opts) end
   -- },
-  -- {
-  --   "rachartier/tiny-glimmer.nvim",
-  --   event = "VeryLazy",
-  --   priority = 10, -- Needs to be a really low priority, to catch others plugins keybindings
-  --   opts = {
-  --     overwrite = {
-  --       yank = {
-  --         enabled = true,
-  --         default_animation = "rainbow",
-  --       },
-  --       search = {
-  --         enabled = true,
-  --         default_animation = {
-  --           name = "rainbow",
-  --           settings = {
-  --             to_color = vim.opt.hlsearch and "CurSearch" or "Search",
-  --           },
-  --         },
-  --       },
-  --       paste = {
-  --         enabled = true,
-  --         default_animation = "rainbow",
-  --       },
-  --       yank = {
-  --         enabled = true,
-  --         default_animation = "rainbow",
-  --       },
-  --       undo = {
-  --         enabled = true,
-  --         default_animation = "rainbow",
-  --       },
-  --       redo = {
-  --         enabled = true,
-  --         default_animation = "rainbow",
-  --
-  --       }
-  --     },
-  --     support = {
-  --       -- Enable support for gbprod/substitute.nvim
-  --       -- You can use it like so:
-  --       -- require("substitute").setup({
-  --       --     on_substitute = require("tiny-glimmer.support.substitute").substitute_cb,
-  --       --     highlight_substituted_text = {
-  --       --         enabled = false,
-  --       --     },
-  --       --})
-  --       substitute = {
-  --         enabled = true,
-  --
-  --         -- Can also be a table. Refer to overwrite.search for more information
-  --         default_animation = "rainbow",
-  --       },
-  --     },
-  --     default_animation = "rainbow",
-  --     animations = {
-  --       rainbow = {
-  --         max_duration = 200,
-  --         min_duration = 100,
-  --         chars_for_max_duration = 20,
-  --       },
-  --     }
-  --   },
-  -- },
+  {
+    "rachartier/tiny-glimmer.nvim",
+    event = "VeryLazy",
+    priority = 10, -- Needs to be a really low priority, to catch others plugins keybindings
+    opts = {
+      overwrite = {
+        yank = {
+          enabled = true,
+          default_animation = "rainbow",
+        },
+        search = {
+          enabled = true,
+          default_animation = {
+            name = "rainbow",
+            settings = {
+              to_color = vim.opt.hlsearch and "CurSearch" or "Search",
+            },
+          },
+        },
+        paste = {
+          enabled = true,
+          default_animation = "rainbow",
+        },
+        yank = {
+          enabled = true,
+          default_animation = "rainbow",
+        },
+        undo = {
+          enabled = true,
+          default_animation = "rainbow",
+        },
+        redo = {
+          enabled = true,
+          default_animation = "rainbow",
+
+        }
+      },
+      support = {
+        -- Enable support for gbprod/substitute.nvim
+        -- You can use it like so:
+        -- require("substitute").setup({
+        --     on_substitute = require("tiny-glimmer.support.substitute").substitute_cb,
+        --     highlight_substituted_text = {
+        --         enabled = false,
+        --     },
+        --})
+        substitute = {
+          enabled = true,
+
+          -- Can also be a table. Refer to overwrite.search for more information
+          default_animation = "rainbow",
+        },
+      },
+      default_animation = "rainbow",
+      animations = {
+        rainbow = {
+          max_duration = 200,
+          min_duration = 100,
+          chars_for_max_duration = 20,
+        },
+      }
+    },
+  },
   {
     "bassamsdata/namu.nvim",
     config = function()
