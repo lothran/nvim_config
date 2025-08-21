@@ -751,5 +751,5 @@ local plugins = {
 }
 
 require('lazy').setup(plugins)
-
 vim.cmd [[colorscheme  gruvbox]]
+require('handle_remote')
