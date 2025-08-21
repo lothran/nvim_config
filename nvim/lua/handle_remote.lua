@@ -1,22 +1,7 @@
 -- Sync clipboard between OS and Neovim.
 -- Function to set OSC 52 clipboard
 local function set_osc52_clipboard()
-  local function my_paste()
-    local content = vim.fn.getreg '"'
-    return vim.split(content, '\n')
-  end
-
-  vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
-      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
-    },
-    paste = {
-      ['+'] = my_paste,
-      ['*'] = my_paste,
-    },
-  }
+  vim.g.clipboard = 'osc52'
 end
 
 -- Check if the current session is a remote WezTerm session based on the WezTerm executable
@@ -33,10 +18,9 @@ end
 -- Schedule the setting after `UiEnter` because it can increase startup-time.
 vim.schedule(function()
   vim.opt.clipboard:append 'unnamedplus'
-
   -- Standard SSH session handling
-    if vim.uv.os_getenv 'SSH_CLIENT' ~= nil or vim.uv.os_getenv 'SSH_TTY' ~= nil then
-    set_osc52_clipboard()
+  if vim.uv.os_getenv 'SSH_CLIENT' ~= nil or vim.uv.os_getenv 'SSH_TTY' ~= nil then
+     set_osc52_clipboard()
   else
     check_wezterm_remote_clipboard(function(is_remote_wezterm)
       if is_remote_wezterm then

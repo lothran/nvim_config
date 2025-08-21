@@ -16,7 +16,7 @@ config.keys = {
     key = 'E',
     mods = 'CTRL|SHIFT',
     action = act.PromptInputLine {
-      description = 'Enter new name for tab',
+      description = 'Enter new name for workspace',
       action = wezterm.action_callback(function(window, pane, line)
         -- line will be `nil` if they hit escape without entering anything
         -- An empty string if they just hit enter
@@ -30,8 +30,8 @@ config.keys = {
       end),
     },
   },
-  { key = '{', mods = 'SHIFT|ALT', action = act.MoveTabRelative(-1) },
-  { key = '}', mods = 'SHIFT|ALT', action = act.MoveTabRelative(1) },
+  { key = "LeftArrow",  mods = 'CTRL|SHIFT', action = wezterm.action { ActivateTabRelative = -1 } },
+  { key = "RightArrow", mods = 'CTRL|SHIFT', action = wezterm.action { ActivateTabRelative = 1 } },
 }
 -- making window titles more distinct
 wezterm.on('format-window-title', function()
