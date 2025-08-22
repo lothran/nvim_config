@@ -12,7 +12,7 @@ vim.opt.cmdheight   = 0
 vim.opt.numberwidth = 4
 vim.opt.signcolumn  = 'yes'
 vim.opt.clipboard   = 'unnamedplus'
-vim.opt.mouse = ""
+
 
 
 
@@ -486,7 +486,7 @@ local plugins = {
         pickers = {
           find_files = {
             hidden = "true",
-            file_ignore_patterns = { 'node_modules', '.git', '.venv', '.nvim', '.repo' },
+            file_ignore_patterns = { '^node_modules', '^.git', '^.venv', '^.nvim', '^.repo' },
           },
           colorscheme = {
             enable_preview = true
