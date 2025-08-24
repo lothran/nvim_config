@@ -155,45 +155,12 @@ local function format_title(tab)
   return string.format(" %s %s/ %s ", process, cwd, description)
 end
 
--- Determine if a tab has unseen output since last visited
-local function has_unseen_output(tab)
-  if not tab.is_active then
-    for _, pane in ipairs(tab.panes) do
-      if pane.has_unseen_output then return true end
-    end
-  end
-  return false
-end
 
 -- Returns manually set title (from `tab:set_title()` or `wezterm cli set-tab-title`) or creates a new one
 local function get_tab_title(tab)
   local title = tab.tab_title
   if title and #title > 0 then return title end
   return format_title(tab)
-end
-
--- Convert arbitrary strings to a unique hex color value
--- Based on: https://stackoverflow.com/a/3426956/3219667
-local function string_to_color(str)
-  -- Convert the string to a unique integer
-  local hash = 0
-  for i = 1, #str do
-    hash = string.byte(str, i) + ((hash << 5) - hash)
-  end
-
-  -- Convert the integer to a unique color
-  local c = string.format("%06X", hash & 0x00FFFFFF)
-  return "#" .. (string.rep("0", 6 - #c) .. c):upper()
-end
-
-local function select_contrasting_fg_color(col)
-  -- Note: this could use `return color:complement_ryb()` instead if you prefer or other builtins!
-  ---@diagnostic disable-next-line: unused-local
-  local lightness, _a, _b, _alpha = col:laba()
-  if lightness > 55 then
-    return "#000000" -- Black has higher contrast with colors perceived to be "bright"
-  end
-  return "#FFFFFF"   -- White has higher contrast
 end
 
 
@@ -205,18 +172,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   local title = get_tab_title(tab)
   local color = wezterm.color.parse(string_to_color(title))
 
-  if tab.is_active then
-    return {
-      { Attribute = { Intensity = "Bold" } },
-      { Background = { Color = color } },
-      { Foreground = { Color = select_contrasting_fg_color(color) } },
-      { Text = title },
-    }
-  end
-  local wcolor = color:darken(0.5):desaturate(0.0)
   return {
-    { Background = { Color = wcolor } },
-    { Foreground = { Color = select_contrasting_fg_color(wcolor) } },
     { Text = title },
   }
 end)
