@@ -471,6 +471,7 @@ local plugins = {
       { "<space>dia", "<CMD>Telescope diagnostics<CR>",                           mode = { "n", "v" } },
       { "<space>ls",  function() show_symboles() end,                             mode = { "n", "v" } },
       { "<space>gs",  "<CMD>Telescope git_status<CR>",                            mode = { "n", "v" } },
+      { "<space>ml",  function() require("mutagen").telescope_list_syncs() end,   mode = { "n", "v" } },
     },
     config = function()
       require('telescope').setup {
@@ -493,7 +494,6 @@ local plugins = {
           }
         },
       }
-
       require('telescope').load_extension('fzf')
     end
   },
@@ -751,6 +751,6 @@ local plugins = {
     }
   }
 }
-
 require('lazy').setup(plugins)
+require('mutagen').setup({})
 vim.cmd [[colorscheme  gruvbox]]

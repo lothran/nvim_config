@@ -69,6 +69,8 @@ ins_left {
 
 
 
+
+
 ins_left {
   function()
     return '▊'
@@ -140,6 +142,7 @@ ins_right {
   cond = conditions.hide_in_width,
 }
 
+
 ins_right {
   'fileformat',
   fmt = string.upper,
@@ -150,6 +153,28 @@ ins_right {
   'branch',
   icon = '',
 }
+ins_right {
+  function()
+    local mutagen = require("mutagen")
+    local sync = mutagen.sunc_find()
+    local symbols = { ' ', ' ' }
+    local status = 0
+    if sync == nil then
+      return " nobne"
+    else
+      if mutagen.sync_connected(sync) then
+        status = 1
+      else
+        status = 2
+      end
+      return sync.name .. symbols[status]
+    end
+  end,
+  icon = ' mutagen:',
+
+}
+
+
 
 ins_right {
   'diff',

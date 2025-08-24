@@ -77,6 +77,7 @@ function M.setup(opts)
         local lines = vim.split(res.stdout, "\n")
         local sessions = M.parse_sync_list(lines)
         for _, session in ipairs(sessions) do
+          print(vim.inspect(session))
           if vim.startswith(path, session.alpha.url) or vim.startswith(path, session.beta.url) then
             vim.system({ "mutagen", "sync", "flush", session.name }, { text = true },
               function(_)
@@ -89,15 +90,42 @@ function M.setup(opts)
   })
 end
 
-function M.telescope_list_syncs()
-  local pickers = require "telescope.pickers"
-  local finders = require "telescope.finders"
-  local conf = require("telescope.config").values
+function M.sunc_find()
+  local sessions = M.sync_list()
+  local path = vim.fn.getcwd()
+  for _, session in ipairs(sessions) do
+    if vim.startswith(path, session.alpha.url) or vim.startswith(path, session.beta.url) then
+      return session
+    end
+  end
+  return nil
+end
+
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
+local conf = require("telescope.config").values
+
+
+
+
+function M.sync_terminate(prompt_bufnr)
+  actions.close(prompt_bufnr)
+  local name = action_state.get_selected_entry().value
+  vim.system({ "mutagen", "sync", "terminate", name }, {}, function() end):wait(10)
+  print(vim.inspect(selection))
+end
+
+function M.sync_flush(prompt_bufnr)
+  actions.close(prompt_bufnr)
+  name = action_state.get_selected_entry().value
+  vim.system({ "mutagen", "sync", "flush", name }, {}, function() end):wait(10)
+end
+
+function M.telescope_list_syncs(keys)
   local opts = {}
   local sync = M.sync_list()
-
-
-
   pickers.new(opts, {
     prompt_title = "syncs",
     finder = finders.new_table {
@@ -111,6 +139,14 @@ function M.telescope_list_syncs()
         }
       end,
     },
+    attach_mappings = function(prompt_bufnr, map)
+      actions.select_default:replace(M.sync_flush)
+      modes = { "n", "i", "v" }
+      map("n", "<C-t>", M.sync_terminate)
+      map("i", "<C-t>", M.sync_terminate)
+      return true
+    end,
+
     sorter = conf.generic_sorter(opts),
   }):find()
 end
