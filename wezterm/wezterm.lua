@@ -152,7 +152,7 @@ local function format_title(tab)
   if active_title:find("- NVIM") then active_title = active_title:gsub("^([^ ]+) .*", "%1") end
 
   local description = (not active_title or active_title == cwd) and "~" or active_title
-  return string.format(" %s %s/ %s ", process, cwd, description)
+  return string.format("%s %s/ %s ", process, cwd, description)
 end
 
 
@@ -170,7 +170,6 @@ end
 ---@diagnostic disable-next-line: unused-local
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local title = get_tab_title(tab)
-  local color = wezterm.color.parse(string_to_color(title))
 
   return {
     { Text = title },
