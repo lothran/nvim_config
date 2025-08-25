@@ -77,7 +77,6 @@ function M.setup(opts)
         local lines = vim.split(res.stdout, "\n")
         local sessions = M.parse_sync_list(lines)
         for _, session in ipairs(sessions) do
-          print(vim.inspect(session))
           if vim.startswith(path, session.alpha.url) or vim.startswith(path, session.beta.url) then
             vim.system({ "mutagen", "sync", "flush", session.name }, { text = true },
               function(_)
@@ -114,7 +113,6 @@ function M.sync_terminate(prompt_bufnr)
   actions.close(prompt_bufnr)
   local name = action_state.get_selected_entry().value
   vim.system({ "mutagen", "sync", "terminate", name }, {}, function() end):wait(10)
-  print(vim.inspect(selection))
 end
 
 function M.sync_flush(prompt_bufnr)

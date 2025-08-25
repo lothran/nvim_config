@@ -160,7 +160,7 @@ ins_right {
     local symbols = { ' ', ' ' }
     local status = 0
     if sync == nil then
-      return " nobne"
+      return "None"
     else
       if mutagen.sync_connected(sync) then
         status = 1
