@@ -156,7 +156,7 @@ ins_right {
 ins_right {
   function()
     local mutagen = require("mutagen")
-    local sync = mutagen.sunc_find()
+    local sync = mutagen.sync_find()
     local symbols = { ' ', ' ' }
     local status = 0
     if sync == nil then

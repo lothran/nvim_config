@@ -46,7 +46,7 @@ config.keys = {
     action = wezterm.action.CloseCurrentPane { confirm = true },
   },
   {
-    key = 'W',
+    key = 'R',
     mods = 'CTRL|SHIFT',
     action = act.PromptInputLine {
       description = wezterm.format {

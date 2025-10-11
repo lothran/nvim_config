@@ -456,7 +456,8 @@ local plugins = {
     branch = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' },
+      "lothran/mutagen.nvim",
 
     },
     keys = {
@@ -471,7 +472,7 @@ local plugins = {
       { "<space>dia", "<CMD>Telescope diagnostics<CR>",                           mode = { "n", "v" } },
       { "<space>ls",  function() show_symboles() end,                             mode = { "n", "v" } },
       { "<space>gs",  "<CMD>Telescope git_status<CR>",                            mode = { "n", "v" } },
-      { "<space>ml",  function() require("mutagen").telescope_list_syncs() end,   mode = { "n", "v" } },
+      { "<space>ml",  "<CMD>Telescope mutagen<CR>",                               mode = { "n", "v" } },
     },
     config = function()
       require('telescope').setup {
@@ -495,6 +496,7 @@ local plugins = {
         },
       }
       require('telescope').load_extension('fzf')
+      require('telescope').load_extension('mutagen')
     end
   },
   -- {
@@ -514,6 +516,10 @@ local plugins = {
   --     },
   --   }
   -- },
+  {
+    "lothran/mutagen.nvim",
+    opts = {}
+  },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -752,5 +758,4 @@ local plugins = {
   }
 }
 require('lazy').setup(plugins)
-require('mutagen').setup({})
 vim.cmd [[colorscheme  gruvbox]]
