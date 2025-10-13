@@ -37,6 +37,7 @@ config.keys = {
       end),
     },
   },
+
   { key = "LeftArrow",  mods = 'CTRL|SHIFT', action = wezterm.action { ActivateTabRelative = -1 } },
   { key = "RightArrow", mods = 'CTRL|SHIFT', action = wezterm.action { ActivateTabRelative = 1 } },
 
@@ -74,6 +75,13 @@ config.keys = {
       flags = 'FUZZY|WORKSPACES',
     },
   },
+  {
+    key = '0',
+    mods = 'CTRL',
+    action = act.PaneSelect {
+    },
+  },
+
 }
 config.mouse_bindings = {
   {
