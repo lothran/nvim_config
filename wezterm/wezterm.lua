@@ -12,6 +12,9 @@ local act = wezterm.action
 config.font_size = 11
 config.font = wezterm.font '0xProto Nerd Font Mono'
 config.color_scheme = 'GruvboxDark'
+config.animation_fps = 100
+config.max_fps = 120
+config.warn_about_missing_glyphs = false
 
 config.keys = {
   {
@@ -80,6 +83,13 @@ config.keys = {
     mods = 'CTRL',
     action = act.PaneSelect {
     },
+  },
+  {
+    key = '!',
+    mods = 'CTRL | SHIFT',
+    action = wezterm.action_callback(function(win, pane)
+      local tab, window = pane:move_to_new_window()
+    end),
   },
 
 }
