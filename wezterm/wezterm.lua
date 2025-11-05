@@ -190,7 +190,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   local title = get_tab_title(tab)
 
   return {
-    { Text = title },
+    { Text = ' ' .. title .. ' ' },
   }
 end)
 

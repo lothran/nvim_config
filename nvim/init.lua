@@ -37,7 +37,7 @@ vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-h>", "<C-w>h")
 vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-j>", "<C-w>j")
 vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-k>", "<C-w>k")
 vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-l>", "<C-w>l")
-vim.keymap.set('n', "<space>sh", "<CMD>ClangdSwitchSourceHeader<CR>")
+vim.keymap.set('n', "<space>sh", "<CMD>LspClangdSwitchSourceHeader<CR>")
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -130,6 +130,16 @@ local plugins = {
   },
   {
     'aliqyan-21/darkvoid.nvim',
+  },
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    config = function()
+      require("tiny-inline-diagnostic").setup()
+      vim.diagnostic.config({ virtual_text = false })   -- Disable Neovim's default virtual text diagnostics
+    end,
+
   },
 
   {
