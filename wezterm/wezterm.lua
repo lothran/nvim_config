@@ -11,7 +11,8 @@ local act = wezterm.action
 -- or, changing the font size and color scheme.
 config.font_size = 11
 config.font = wezterm.font '0xProto Nerd Font Mono'
-config.color_scheme = 'GruvboxDark'
+config.color_scheme = 'GruvboxDarkHard'
+
 config.animation_fps = 100
 config.max_fps = 120
 config.warn_about_missing_glyphs = false
@@ -188,10 +189,13 @@ end
 ---@diagnostic disable-next-line: unused-local
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local title = get_tab_title(tab)
-
-  return {
-    { Text = ' ' .. title .. ' ' },
-  }
+  if tab.is_active then
+    return {
+      { Background = { Color = '#9D0006' } },
+      { Text = ' ' .. title .. ' ' },
+    }
+  end
+  return title
 end)
 
 -- Finally, return the configuration to wezterm:
