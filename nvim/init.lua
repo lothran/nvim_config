@@ -46,7 +46,7 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-n>', '<C-d>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-p>', '<C-u>')
 
-vim.keymap.set('t', '<A-t>', [[<C-\><C-n>]])
+vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
 vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
 vim.filetype.add({
   extension = {
@@ -383,6 +383,7 @@ local plugins = {
       'akinsho/toggleterm.nvim',
       direction = 'float'
     }
+
   },
 
   {
@@ -790,5 +791,7 @@ local plugins = {
     }
   }
 }
+
 require('lazy').setup(plugins)
+require('terms')
 vim.cmd [[colorscheme  gruvbox]]
