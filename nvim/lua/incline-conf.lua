@@ -3,11 +3,6 @@ local devicons = require 'nvim-web-devicons'
 
 require('incline').setup {
   ignore = {
-    buftypes = "special",
-    filetypes = {},
-    floating_wins = true,
-    unlisted_buffers = true,
-    wintypes = "special"
   },
   window = {
     padding = 0,

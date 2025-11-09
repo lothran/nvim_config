@@ -1,61 +1,10 @@
 -------------------------------------------------------------------------------
--- Options
+-- Functions
 -------------------------------------------------------------------------------
-vim.opt.number      = true
-vim.opt.cursorline  = true
-vim.opt.smartindent = true
-vim.opt.expandtab   = true
-vim.opt.tabstop     = 2
-vim.opt.shiftwidth  = 2
-vim.opt.laststatus  = 3
-vim.opt.cmdheight   = 0
-vim.opt.numberwidth = 4
-vim.opt.signcolumn  = 'yes'
-vim.opt.clipboard   = 'unnamedplus'
-
-
-
-
-vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
-
-vim.o.background      = "dark"
-vim.opt.termguicolors = true
-vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
-vim.opt.scroll        = 50
-
-
-
-
--------------------------------------------------------------------------------
--- Keymap
--------------------------------------------------------------------------------
+---
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = ' '
 
-
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-h>", "<C-w>h")
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-j>", "<C-w>j")
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-k>", "<C-w>k")
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-l>", "<C-w>l")
-vim.keymap.set('n', "<space>sh", "<CMD>LspClangdSwitchSourceHeader<CR>")
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
-vim.keymap.set({ 'n', 'i', 'v' }, '<C-n>', '<C-d>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<C-p>', '<C-u>')
-
-vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
-vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
-vim.filetype.add({
-  extension = {
-    glsl = 'glsl',
-    frag = 'glsl',
-    vert = 'glsl',
-    comp = 'glsl',
-  }
-})
 local function show_symboles()
   local telescope = require('telescope.builtin')
   telescope.lsp_workspace_symbols({
@@ -68,21 +17,6 @@ local function show_symboles()
     }
   });
 end
-
-
-
--------------------------------------------------------------------------------
--- Autocmds
--------------------------------------------------------------------------------
-
---auto save
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
-  callback = function()
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
-      vim.api.nvim_command('silent update')
-    end
-  end,
-})
 
 -------------------------------------------------------------------------------
 -- Bootstrap Package Manager
@@ -378,12 +312,18 @@ local plugins = {
   },
   {
     "akinsho/toggleterm.nvim",
-    config = {
-      open_mapping = [[<c-\>]],
-      'akinsho/toggleterm.nvim',
-      direction = 'float'
-    }
-
+    config = function()
+      require("toggleterm").setup {
+        open_mapping = [[<c-\>]],
+        direction = 'float',
+        winbar = {
+          enabled = true,
+          name_formatter = function(term) --  term: Terminal
+            return "HEY"
+          end
+        },
+      }
+    end,
   },
 
   {
@@ -793,5 +733,73 @@ local plugins = {
 }
 
 require('lazy').setup(plugins)
-require('terms')
+-------------------------------------------------------------------------------
+-- Options
+-------------------------------------------------------------------------------
+vim.opt.number      = true
+vim.opt.cursorline  = true
+vim.opt.smartindent = true
+vim.opt.expandtab   = true
+vim.opt.tabstop     = 2
+vim.opt.shiftwidth  = 2
+vim.opt.cmdheight   = 0
+vim.opt.numberwidth = 4
+vim.opt.signcolumn  = 'yes'
+vim.opt.clipboard   = 'unnamedplus'
+
+
+
+vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.background      = "dark"
+vim.opt.termguicolors = true
+vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
+vim.opt.scroll        = 50
 vim.cmd [[colorscheme  gruvbox]]
+
+vim.filetype.add({
+  extension = {
+    glsl = 'glsl',
+    frag = 'glsl',
+    vert = 'glsl',
+    comp = 'glsl',
+  }
+})
+
+
+
+
+-------------------------------------------------------------------------------
+-- Keymap
+-------------------------------------------------------------------------------
+
+
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-h>", "<C-w>h")
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-j>", "<C-w>j")
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-k>", "<C-w>k")
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-l>", "<C-w>l")
+vim.keymap.set('n', "<space>sh", "<CMD>LspClangdSwitchSourceHeader<CR>")
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+vim.keymap.set({ 'n', 'i', 'v' }, '<C-n>', '<C-d>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<C-p>', '<C-u>')
+
+vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
+vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
+
+
+
+
+-------------------------------------------------------------------------------
+-- Autocmds
+-------------------------------------------------------------------------------
+--auto save
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
+  callback = function()
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+      vim.api.nvim_command('silent update')
+    end
+  end,
+})
