@@ -154,26 +154,34 @@ ins_right {
   'branch',
   icon = '',
 }
-ins_right {
-  function()
-    local mutagen = require("mutagen")
-    local sync = mutagen.sync_find()
-    local symbols = { ' ', ' ' }
-    local status = 0
-    if sync == nil then
-      return "None"
-    else
-      if mutagen.sync_connected(sync) then
-        status = 1
-      else
-        status = 2
-      end
-      return sync.name .. symbols[status]
-    end
-  end,
-  icon = ' mutagen:',
-
-}
+-- local mutagen_slow_down_counter = 0
+-- local mutagen_status = 0
+-- local mutagen_name = "None"
+-- ins_right {
+--   function()
+--     local symbols = { " None", ' ', ' ' }
+--     if mutagen_slow_down_counter % 1000 == 0 then
+--       print("update")
+--       local mutagen = require("mutagen")
+--       local sync = mutagen.sync_find()
+--       if sync == nil then
+--         mutagen_status = 0
+--         mutagen_name = ""
+--       else
+--         if mutagen.sync_connected(sync) then
+--           mutagen_status = 1
+--         else
+--           mutagen_status = 2
+--         end
+--         mutagen_name = sync.name
+--       end
+--     end
+--     mutagen_slow_down_counter = mutagen_slow_down_counter + 1
+--     return mutagen_name .. symbols[mutagen_status+1]
+--   end,
+--   icon = ' mutagen:',
+--
+-- }
 
 
 

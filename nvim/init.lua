@@ -1,4 +1,80 @@
 -------------------------------------------------------------------------------
+-- Options
+-------------------------------------------------------------------------------
+vim.opt.number      = true
+vim.opt.cursorline  = true
+vim.opt.smartindent = true
+vim.opt.expandtab   = true
+vim.opt.tabstop     = 2
+vim.opt.shiftwidth  = 2
+vim.opt.cmdheight   = 0
+vim.opt.numberwidth = 4
+vim.opt.signcolumn  = 'yes'
+vim.opt.clipboard   = 'unnamedplus'
+
+
+
+vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.background      = "dark"
+vim.opt.termguicolors = true
+vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
+vim.opt.scroll        = 50
+
+vim.filetype.add({
+  extension = {
+    glsl = 'glsl',
+    frag = 'glsl',
+    vert = 'glsl',
+    comp = 'glsl',
+  }
+})
+
+
+
+
+-------------------------------------------------------------------------------
+-- Keymap
+-------------------------------------------------------------------------------
+
+
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-h>", "<C-w>h")
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-j>", "<C-w>j")
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-k>", "<C-w>k")
+vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-l>", "<C-w>l")
+vim.keymap.set('n', "<space>sh", "<CMD>LspClangdSwitchSourceHeader<CR>")
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+vim.keymap.set({ 'n', 'i', 't', 'v' }, '<C-1>', '<CMD>1ToggleTerm<CR>')
+vim.keymap.set({ 'n', 'i', 't', 'v' }, '<C-2>', '<CMD>2ToggleTerm<CR>')
+vim.keymap.set({ 'n', 'i', 't', 'v' }, '<C-3>', '<CMD>3ToggleTerm<CR>')
+vim.keymap.set({ 'n', 'i', 't', 'v' }, '<C-4>', '<CMD>4ToggleTerm<CR>')
+
+vim.keymap.set({ 'n', 'i', 'v' }, '<C-n>', '<C-d>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<C-p>', '<C-u>')
+
+vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
+vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
+
+
+
+
+-------------------------------------------------------------------------------
+-- Autocmds
+-------------------------------------------------------------------------------
+--auto save
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
+  callback = function()
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+      vim.api.nvim_command('silent update')
+    end
+  end,
+})
+
+
+
+-------------------------------------------------------------------------------
 -- Functions
 -------------------------------------------------------------------------------
 ---
@@ -409,7 +485,7 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' },
-      "lothran/mutagen.nvim",
+      -- "lothran/mutagen.nvim",
 
     },
     keys = {
@@ -424,7 +500,7 @@ local plugins = {
       { "<space>dia", "<CMD>Telescope diagnostics<CR>",                           mode = { "n", "v" } },
       { "<space>ls",  function() show_symboles() end,                             mode = { "n", "v" } },
       { "<space>gs",  "<CMD>Telescope git_status<CR>",                            mode = { "n", "v" } },
-      { "<space>ml",  "<CMD>Telescope mutagen<CR>",                               mode = { "n", "v" } },
+      -- { "<space>ml",  "<CMD>Telescope mutagen<CR>",                               mode = { "n", "v" } },
     },
     config = function()
       require('telescope').setup {
@@ -448,7 +524,7 @@ local plugins = {
         },
       }
       require('telescope').load_extension('fzf')
-      require('telescope').load_extension('mutagen')
+      -- require('telescope').load_extension('mutagen')
     end
   },
   -- {
@@ -468,10 +544,10 @@ local plugins = {
   --     },
   --   }
   -- },
-  {
-    "lothran/mutagen.nvim",
-    opts = {}
-  },
+  -- {
+  --   "lothran/mutagen.nvim",
+  --   opts = {}
+  -- },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -733,73 +809,5 @@ local plugins = {
 }
 
 require('lazy').setup(plugins)
--------------------------------------------------------------------------------
--- Options
--------------------------------------------------------------------------------
-vim.opt.number      = true
-vim.opt.cursorline  = true
-vim.opt.smartindent = true
-vim.opt.expandtab   = true
-vim.opt.tabstop     = 2
-vim.opt.shiftwidth  = 2
-vim.opt.cmdheight   = 0
-vim.opt.numberwidth = 4
-vim.opt.signcolumn  = 'yes'
-vim.opt.clipboard   = 'unnamedplus'
 
-
-
-vim.o.sessionoptions  = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
-vim.o.background      = "dark"
-vim.opt.termguicolors = true
-vim.g.node_host_prog  = io.popen("/usr/bash -c 'nvm which default || node'"):read('*a');
-vim.opt.scroll        = 50
 vim.cmd [[colorscheme  gruvbox]]
-
-vim.filetype.add({
-  extension = {
-    glsl = 'glsl',
-    frag = 'glsl',
-    vert = 'glsl',
-    comp = 'glsl',
-  }
-})
-
-
-
-
--------------------------------------------------------------------------------
--- Keymap
--------------------------------------------------------------------------------
-
-
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-h>", "<C-w>h")
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-j>", "<C-w>j")
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-k>", "<C-w>k")
-vim.keymap.set({ 'n', 'i', 't', 'v' }, "<C-l>", "<C-w>l")
-vim.keymap.set('n', "<space>sh", "<CMD>LspClangdSwitchSourceHeader<CR>")
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
-vim.keymap.set({ 'n', 'i', 'v' }, '<C-n>', '<C-d>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<C-p>', '<C-u>')
-
-vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]])
-vim.keymap.set({ 'n', 'i', 't', 'v' }, '<c-z>', function() end);
-
-
-
-
--------------------------------------------------------------------------------
--- Autocmds
--------------------------------------------------------------------------------
---auto save
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
-  callback = function()
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
-      vim.api.nvim_command('silent update')
-    end
-  end,
-})
