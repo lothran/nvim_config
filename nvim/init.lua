@@ -500,7 +500,8 @@ local plugins = {
       { "<space>dia", "<CMD>Telescope diagnostics<CR>",                           mode = { "n", "v" } },
       { "<space>ls",  function() show_symboles() end,                             mode = { "n", "v" } },
       { "<space>gs",  "<CMD>Telescope git_status<CR>",                            mode = { "n", "v" } },
-      -- { "<space>ml",  "<CMD>Telescope mutagen<CR>",                               mode = { "n", "v" } },
+      { "<space>ml",  "<CMD>Telescope mutagen<CR>",                               mode = { "n", "v" } },
+      { "<space>;",   "<CMD>Telescope resume<CR>",                                mode = { "n", "v" } },
     },
     config = function()
       require('telescope').setup {
